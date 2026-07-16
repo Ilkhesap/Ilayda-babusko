@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>İyi ki Doğdun İlaydaaa</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Plus+Jakarta+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #120621 0%, #310e35 100%);
+            color: #fff;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 600px;
+            width: 100%;
+            padding: 60px 20px;
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            box-sizing: border-box;
+        }
+
+                h1 {
+            font-family: 'Dancing Script', cursive;
+            font-size: clamp(2.8em, 8vw, 4.5em);
+            color: #FFD700;
+            text-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+            margin: 0 0 10px 0;
+            animation: pulse 3s infinite;
+        }
+
+        .date {
+            font-size: 1.1em;
+            font-weight: 600;
+            color: #ffb3d9;
+            letter-spacing: 4px;
+            margin-bottom: 50px;
+            border-bottom: 2px solid #FFD700;
+            display: inline-block;
+            padding-bottom: 8px;
+        }
+
+        /* --- HEDİYE ALANI (YENİ DÜZEN) --- */
+        .gift-section {
+            position: relative;
+            width: 100%;
+            min-height: 380px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            margin-top: 20px;
+        }
+
+        /* Hediye Kutusu */
+        .gift-wrapper {
+            position: relative;
+            width: 150px;
+            height: 150px;
+            cursor: pointer;
+            transition: transform 0.3s ease, opacity 0.5s ease;
+            z-index: 10;
+        }
+
+        .gift-wrapper:hover {
+            transform: scale(1.08) rotate(3deg);
+        }
+
+        .gift-box {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #ff4081, #d81b60);
+            border-radius: 12px;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.4);
+        }
+
+        /* Kutu Kapağı */
+        .box-lid {
+            position: absolute;
+            top: -12px;
+            left: -5px;
+            width: 160px;
+            height: 25px;
+            background: linear-gradient(135deg, #ff1744, #d50000);
+            border-radius: 5px;
+            box-shadow: 0 5px 10px rgba(0,0,0,0.3);
+            transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.5s;
+            z-index: 12;
+        }
+
+        /* Kurdeleler */
+        .box-ribbon-v {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 22px;
+            height: 100%;
+            background: #FFD700;
+            z-index: 4;
+        }
+
+        .box-ribbon-h {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            transform: translateY(-50%);
+            width: 100%;
+            height: 22px;
+            background: #FFD700;
+            z-index: 4;
+        }
+
+        /* Fiyonk */
+        .box-bow {
+            position: absolute;
+            top: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 44px;
+            height: 22px;
+            background: #FFD700;
+            border-radius: 50% 50% 0 0;
+            z-index: 13;
+            transition: transform 0.8s ease, opacity 0.5s;
+        }
+
+        .box-bow::before, .box-bow::after {
+            content: '';
+            position: absolute;
+            width: 26px;
+            height: 26px;
+            border: 6px solid #FFD700;
+            border-radius: 50%;
+            top: -14px;
+        }
+        .box-bow::before { left: -22px; }
+        .box-bow::after { right: -22px; }
+
+        /* Tıkla Yazısı (Çakışma Önlenmiş Yeni Konum) */
+        .click-text {
+            margin-top: 35px;
+            font-size: 1.15em;
+            color: #FFD700;
+            font-weight: 700;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+            animation: bounce 2s infinite;
+            transition: opacity 0.4s ease;
+            z-index: 5;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-10px); }
+            60% { transform: translateY(-5px); }
+        }
+
+        /* --- SÜRPRİZ MEKTUP (HAVALI VE SADE) --- */
+        .letter {
+            position: absolute;
+            top: 30px;
+            left: 50%;
+            transform: translateX(-50%) scale(0);
+            width: 90%;
+            max-width: 400px;
+            background: rgba(255, 255, 255, 0.98);
+            color: #222;
+            padding: 35px 25px;
+            border-radius: 24px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.6), 0 0 25px rgba(255, 215, 0, 0.3);
+            opacity: 0;
+            transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.8s;
+            z-index: 15;
+            box-sizing: border-box;
+        }
+
+        .letter-content h3 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2.5em;
+            color: #d81b60;
+            margin: 0 0 15px 0;
+        }
+
+        .letter-content p {
+            font-size: 1em;
+            line-height: 1.7;
+            color: #333;
+            margin: 14px 0;
+            font-weight: 500;
+        }
+
+        /* Yanlardaki Süzülen Emojiler */
+        .emoji-left, .emoji-right {
+            position: absolute;
+            font-size: 1.6em;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            animation: float-emojis 3s infinite ease-in-out;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .emoji-left { left: -45px; }
+        .emoji-right { right: -45px; }
+
+        /* Mobil ekranlarda emojilerin dışarı taşmasını engelleme */
+        @media (max-width: 500px) {
+            .emoji-left { left: -10px; z-index: -1; opacity: 0.5; }
+            .emoji-right { right: -10px; z-index: -1; opacity: 0.5; }
+        }
+
+        @keyframes float-emojis {
+            0%, 100% { transform: translateY(-50%) translateY(0); }
+            50% { transform: translateY(-50%) translateY(-12px); }
+        }
+
+        /* Animasyon Tetikleyicileri */
+        .gift-wrapper.opened .box-lid {
+            transform: translateY(-120px) rotate(-30deg);
+            opacity: 0;
+        }
+        .gift-wrapper.opened .box-bow {
+            transform: translate(-50%, -120px) rotate(-30deg);
+            opacity: 0;
+        }
+        .gift-wrapper.opened {
+            pointer-events: none;
+            opacity: 0;
+            transform: scale(0.5);
+            transition: all 0.6s ease;
+        }
+
+        .letter.show {
+            transform: translateX(-50%) scale(1);
+            opacity: 1;
+        }
+
+        /* Işıltı Arka Planı */
+        .sparkle {
+            position: fixed;
+            width: 4px;
+            height: 4px;
+            background: white;
+            border-radius: 50%;
+            box-shadow: 0 0 10px white, 0 0 20px #FFD700;
+            animation: float 4s infinite linear;
+            z-index: 1;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.03); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes float {
+            0% { transform: translateY(100vh) scale(0); opacity: 0; }
+            50% { opacity: 1; }
+            100% { transform: translateY(-10vh) scale(1.5); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Arka plan ışıltıları -->
+    <script>
+        for (let i = 0; i < 40; i++) {
+            let sparkle = document.createElement('div');
+            sparkle.className = 'sparkle';
+            sparkle.style.left = Math.random() * 100 + 'vw';
+            sparkle.style.animationDelay = Math.random() * 5 + 's';
+            sparkle.style.animationDuration = (Math.random() * 3 + 3) + 's';
+            document.body.appendChild(sparkle);
+        }
+    </script>
+
+    <div class="container">
+        <h1>İyi ki Doğdun İlayda</h1>
+        <div class="date">14 KASIM</div>
+
+        <!-- SÜRPRİZ KUTU ALANI -->
+        <div class="gift-section">
+            <div class="gift-wrapper" id="giftWrapper" onclick="openGift()">
+                <div class="box-lid"></div>
+                <div class="box-bow"></div>
+                <div class="gift-box">
+                    <div class="box-ribbon-v"></div>
+                    <div class="box-ribbon-h"></div>
+                </div>
+            </div>
+            
+            <div class="click-text" id="clickText">Sana Bir Sürprizim Var! Kutuyu Aç... 🎁</div>
+
+            <!-- Kutu Açılınca Çıkacak Özgün Mektup -->
+            <div class="letter" id="secretLetter">
+                <span class="emoji-left">✨<br>🖤<br>🦄<br>🥂</span>
+                <div class="letter-content">
+                    <h3>İlayda için küçük bir gerçek...</h3>
+                    <p>bu siteyi 16 temmuzda yapıyorum tanışalı haftalar olmasına rağmen benim için çok değerlisin seni çok seviyorummm</p>
+                    <p>Sen benim için çok özelsin seninle konuşurken çok mutlu oluyorumm</p>
+                    <p>14 Kasım yeni yaşında umarım güzel bir yıl geçirirsin iyi ki doğdun canım arkadasimmm 🎂🎉✨</p>
+                </div>
+                <span class="emoji-right">🥂<br>🦄<br>🖤<br>✨</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scriptler -->
+    <script>
+        function openGift() {
+            const gift = document.getElementById('giftWrapper');
+            const letter = document.getElementById('secretLetter');
+            const clickText = document.getElementById('clickText');
+
+            // Kutunun açılma efektini başlat
+            gift.classList.add('opened');
+            
+            // "Tıkla" yazısını pürüzsüzce kaybet
+            clickText.style.opacity = '0';
+            setTimeout(() => {
+                clickText.style.display = 'none';
+            }, 400);
+
+            // Mektubu göster ve emojileri patlat
+            setTimeout(() => {
+                letter.classList.add('show');
+                createEmojiExplosion();
+            }, 300);
+        }
+
+        function createEmojiExplosion() {
+            const emojis = ['✨', '🖤', '👑', '🎉', '🦄', '🌸', '🎈', '🥰', '🥂'];
+            const container = document.querySelector('.gift-section');
+
+            for (let i = 0; i < 35; i++) {
+                const p = document.createElement('div');
+                p.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+                p.style.position = 'absolute';
+                p.style.fontSize = (Math.random() * 15 + 20) + 'px';
+                p.style.pointerEvents = 'none';
+                p.style.zIndex = '20';
+                p.style.left = '50%';
+                p.style.top = '100px'; // Patlamanın kutunun olduğu merkezden çıkması için sabitledik
+                p.style.transform = 'translate(-50%, -50%)';
+
+                container.appendChild(p);
+
+                const angle = Math.random() * Math.PI * 2;
+                const velocity = Math.random() * 180 + 100;
+                const x = Math.cos(angle) * velocity;
+                const y = Math.sin(angle) * velocity;
+
+                p.animate([
+                    { transform: 'translate(-50%, -50%) scale(1)', opacity: 1 },
+                    { transform: `translate(calc(-50% + ${x}px), calc(-50% + ${y}px)) scale(0)`, opacity: 0 }
+                ], {
+                    duration: 1600,
+                    easing: 'cubic-bezier(0.1, 0.8, 0.3, 1)',
+                    fill: 'forwards'
+                });
+
+                setTimeout(() => p.remove(), 1600);
+            }
+        }
+    </script>
+</body>
+</html>
